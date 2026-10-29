@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prueba de tema</title>
+<style>
+:root{--bg: #0d1117;--panel: #161b22;--border:#30363d;--tx: #e6edf3;--sub: #8b949e;--ac: #8b5cf6}
+body.tema-claro{--bg: #0d1117;--panel: #161b22;--border:#dddddd;--tx: #e6edf3;--sub: #8b949e}
+body.tema-amoled{--bg: #0d1117;--panel: #161b22;--border:#1c1c1c;--tx: #e6edf3;--sub: #8b949e}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;transition:background .3s}
+h1{font-size:24px;margin-bottom:10px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px;max-width:400px;width:100%;text-align:center}
+.card p{color:var(--sub);font-size:14px;line-height:1.6;margin:10px 0 16px}
+.boton{display:inline-block;background:var(--ac);color:#fff;padding:12px 26px;border-radius:12px;font-weight:700}
+#tema{position:fixed;left:16px;bottom:16px;width:50px;height:50px;border-radius:50%;border:1px solid var(--border);background:var(--panel);font-size:21px;cursor:pointer}
+</style>
+<style id="lf-tema">html,body{background:#0d1117 !important;color:#e6edf3 !important}</style></head>
+<body>
+<h1>🎨 Prueba de tema</h1>
+<div class="card">
+  <p>Tocá el botón <b>🌙 abajo a la izquierda</b>: alterna Oscuro → Claro → AMOLED. Tu elección queda guardada.</p>
+  <span class="boton">Botón de acento</span>
+</div>
+<button id="tema" title="Cambiar tema">🌙</button>
+<script>
+const ORDEN=['','tema-claro','tema-amoled'];
+let i=+(localStorage.getItem('prueba_tema')||0);
+function aplicar(){
+  document.body.classList.remove('tema-claro','tema-amoled');
+  if(ORDEN[i])document.body.classList.add(ORDEN[i]);
+  document.getElementById('tema').textContent=i===1?'☀️':(i===2?'🖤':'🌙');
+  localStorage.setItem('prueba_tema',i);
+}
+aplicar();
+document.getElementById('tema').onclick=()=>{i=(i+1)%ORDEN.length;aplicar();};
+</script>
+</body>
+</html>
